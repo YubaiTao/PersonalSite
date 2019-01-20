@@ -1,12 +1,12 @@
 ---
-title:       "Emacs Tips"
+title:       "Java Note"
 subtitle:    ""
 description: ""
 date:        2019-01-20
 author:      Yubai Tao
-image:       "img/emacs.png"
+image:       "img/java.png"
 showtoc:     false
-tags:        ["Emacs"]
+tags:        ["Java"]
 categories:  ["Tech" ]
 ---
-# Useful Emacs Tips
+# Java Note
