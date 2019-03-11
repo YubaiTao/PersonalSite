@@ -1,7 +1,7 @@
 ---
 title:       "Machine Learning: Bayesian Decision Theory"
 subtitle:    ""
-description: ""
+description: "Brief introduction to Bayes Classifier"
 date:        2019-03-11
 author:      Yubai Tao
 image:       "img/bayes.jpg"
@@ -31,10 +31,10 @@ $$ p(x|y,z) = p(x|y) $$
 
 ### Naive Bayes Classifier
 
-##### Why "naive"?
-In order to apply Bayes rule, we must assume that **Conditional independence among features** (all features are independently and idnetically distributed aka iid), which is a strong assumption.
+#### Why "naive"?
+In order to apply Bayes rule, we must assume that **Conditional independence among features**, which is a strong assumption.
 
-##### Bayes's Rule
+#### Bayes's Rule
 $$ p(y|x)=\frac{p(y)p(x|y)}{p(x)} $$
 p(x) is independent of y.
 
@@ -45,7 +45,11 @@ p(x) is independent of y.
 
 $$ posterior = \frac{prior \times likelihood}{evidence} $$
 
-##### ML & MAP
+Generalized formula:
+$$ p(Y = y\_k)=\frac{p(Y=y\_k)\prod\_{i}p(x\_i|Y=y\_{k})}
+{\sum\_{j}p(Y=y\_j)\prod\_{i}p(x\_i|y\_j)} $$
+
+#### ML & MAP
 
 * MAP (Maximum a-posterior) hypothesis is the *y* that maximizes *p(y)p(x|y)*
 * ML (Maximum likelihood) hypothesis is the *y* that maximizes *p(x|y)*
@@ -53,3 +57,24 @@ $$ posterior = \frac{prior \times likelihood}{evidence} $$
 MAP hypothesis is the same as the ML hypothesis if the priors are the same.
 
 * MAP: $$ \mathop{argmax}\_{y}p(y|x)= \mathop{argmax}\_{y}p(x|y)p(y) $$
+
+#### Smoothing
+* Why use it? 
+  * Estimating that $p(x\_i|C)=0$ is dangerous (can lead numerator to zero)
+  * Use "smoothed" estimates that are never equal to 0
+* Add m smoothing
+  $$ p(x\_i=v|C)=\frac{t+m}{N+ms} $$
+  
+where $s$ is the number of possible attributes for $x\_i$
+
+#### Gaussian Bayes Classifier
+Assume $p(x|y)$ is a Gaussian distribution:
+$$ p(x|C) = \frac{1}{\sqrt{2\pi \sigma^{2}}}
+exp(-\frac{{(x - \mu)}^{2}}{2\sigma^{2}}) $$
+$$ \mu = \frac{1}{N}\sum\_{i=1}^{N}x^{(i)} $$
+$$ \sigma\_{2} = \frac{1}{N}\sum\_{i=1}^{N}{(x^{(i)}-\mu)}^{2} $$
+
+When using Gaussian Bayes classifier, we apply $log()$ function to the estimate function (ML/MAP) for convinence.
+
+
+

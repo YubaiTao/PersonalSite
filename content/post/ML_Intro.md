@@ -1,7 +1,7 @@
 ---
 title:       "Machine Learning: Intro"
 subtitle:    ""
-description: ""
+description: "Small trailer for this series."
 date:        2019-03-11
 author:      Yubai Tao
 image:       "img/intro.png"

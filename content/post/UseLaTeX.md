@@ -11,4 +11,4 @@ categories:  ["Tech" ]
 ---
 # Collection of LaTeX Tips
 
-test content
+place holder.
