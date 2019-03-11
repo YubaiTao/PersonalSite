@@ -4,7 +4,7 @@ subtitle:    ""
 description: ""
 date:        2019-03-11
 author:      Yubai Tao
-image:       ""
+image:       "img/intro.png"
 showtoc:     false
 tags:        ["MachineLearning"]
 categories:  ["Tech" ]
