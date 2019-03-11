@@ -3,7 +3,7 @@ title:       "Collection of LaTeX Tips"
 subtitle:    ""
 description: ""
 date:        2019-02-27
-author:      Yubai Tao
+author:      Yubai Tao
 image:       ""
 showtoc:     false
 tags:        ["LaTeX"]
