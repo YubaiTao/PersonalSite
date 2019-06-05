@@ -15,23 +15,23 @@ categories:  ["Tech" ]
 
 * Best Time to Buy and Sell Stock I (LC#121, Easy)
 <br>
-```Java
-class Solution {
-    public int maxProfit(int[] prices) {
-        if (prices == null || prices.length == 0) {
-            return 0;
+    ```Java
+    class Solution {
+        public int maxProfit(int[] prices) {
+            if (prices == null || prices.length == 0) {
+                return 0;
+            }
+            int n = prices.length;
+            int buyPrice = Integer.MAX_VALUE;
+            int maxProfit = 0;
+            for (int i = 0; i < n; i++) {
+                buyPrice = Math.min(buyPrice, prices[i]);
+                maxProfit = Math.max(maxProfit, prices[i] - buyPrice);
+            }
+            return maxProfit;
         }
-        int n = prices.length;
-        int buyPrice = Integer.MAX_VALUE;
-        int maxProfit = 0;
-        for (int i = 0; i < n; i++) {
-            buyPrice = Math.min(buyPrice, prices[i]);
-            maxProfit = Math.max(maxProfit, prices[i] - buyPrice);
-        }
-        return maxProfit;
     }
-}
-```
+    ```
 
 * Best Time to Buy and Sell Stock II (LC#122, Easy)
 <br>
@@ -39,26 +39,26 @@ Actually an greedy approach. Just add all earning range.
 
 * Best Time to Buy and Sell Stock III (LC#123, Hard)
 <br>
-```Java
-class Solution {
-    public int maxProfit(int[] prices) {
-        int hold1 = Integer.MIN_VALUE;
-        int hold2 = Integer.MIN_VALUE;
-        int release1 = Integer.MIN_VALUE;
-        int release2 = Integer.MIN_VALUE;
-        if (prices.length == 0) {
-            return 0;
+    ```Java
+    class Solution {
+        public int maxProfit(int[] prices) {
+            int hold1 = Integer.MIN_VALUE;
+            int hold2 = Integer.MIN_VALUE;
+            int release1 = Integer.MIN_VALUE;
+            int release2 = Integer.MIN_VALUE;
+            if (prices.length == 0) {
+                return 0;
+            }
+            for (int i : prices) {
+                hold1 = Math.max(hold1, -i);
+                release1 = Math.max(release1, hold1 + i);
+                hold2 = Math.max(hold2, release1 - i);
+                release2 = Math.max(release2, hold2 + i);
+            }
+            return release2;
         }
-        for (int i : prices) {
-            hold1 = Math.max(hold1, -i);
-            release1 = Math.max(release1, hold1 + i);
-            hold2 = Math.max(hold2, release1 - i);
-            release2 = Math.max(release2, hold2 + i);
-        }
-        return release2;
     }
-}
-```
+    ```
 
 * Best Time to Buy and Sell Stock IV (LC#188, hard)
 ```Java
