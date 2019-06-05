@@ -16,22 +16,23 @@ categories:  ["Tech" ]
 
 * LC 236 *LCA (Lowest Common Ancestor)*
 <br> Two solutions
-  * Recursive test!!!!
-```java
-class Demo {
-    private TreeNode lowestCommonAncestor__(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) {
-            return root;
+  * Recursive test
+    <br>
+    ```java
+    class Demo {
+        private TreeNode lowestCommonAncestor__(TreeNode root, TreeNode p, TreeNode q) {
+            if (root == null || root == p || root == q) {
+                return root;
+            }
+            TreeNode left = lowestCommonAncestor__(root.left, p, q);
+            TreeNode right = lowestCommonAncestor__(root.right, p, q);
+            if (left != null && right != null) {
+                return root;
+            }
+            return left == null ? right : left;
         }
-        TreeNode left = lowestCommonAncestor__(root.left, p, q);
-        TreeNode right = lowestCommonAncestor__(root.right, p, q);
-        if (left != null && right != null) {
-            return root;
-        }
-        return left == null ? right : left;
     }
-}
-```
+    ```
   * Iterative
     <br> First traverse the tree and save all 
     the node-parent relationship in a `Map<node, parent>`.
