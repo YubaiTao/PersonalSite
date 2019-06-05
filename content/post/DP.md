@@ -40,7 +40,6 @@ Actually an greedy approach. Just add all earning range.
 * Best Time to Buy and Sell Stock III (LC#123, Hard)
 <br>
 ```Java
-
 class Solution {
     public int maxProfit(int[] prices) {
         int hold1 = Integer.MIN_VALUE;
@@ -63,14 +62,14 @@ class Solution {
 
 * Best Time to Buy and Sell Stock IV (LC#188, hard)
 ```Java
-/**
- * dp[i, j] represents the max profit up until prices[j] using at most i transactions. 
- * dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
- *          = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
- * dp[0, j] = 0; 0 transactions makes 0 profit
- * dp[i, 0] = 0; if there is only one price data point you can't make any transaction.
- */
 class Solution {
+    /**
+     * dp[i, j] represents the max profit up until prices[j] using at most i transactions. 
+     * dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
+     *          = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
+     * dp[0, j] = 0; 0 transactions makes 0 profit
+     * dp[i, 0] = 0; if there is only one price data point you can't make any transaction.
+     */
     public int maxProfit(int k, int[] prices) {
     	int n = prices.length;
     	if (n <= 1)
@@ -97,7 +96,6 @@ class Solution {
         return dp[k][n-1];
     }
 }
-
 ```
 
 #### Derived Buy-Sell-Stock-Like Problems
@@ -107,23 +105,23 @@ class Solution {
 ```Java
 class solution {
     private int maxProfit(int[] prices) {
-            if (prices == null || prices.length <= 1) {
-                return 0;
-            }
-            int n = prices.length;
-            int[] buy = new int[n];
-            int[] sell = new int[n];
-            buy[0] = -prices[0];
-            buy[1] = Math.max(-prices[0], -prices[1]);
-            sell[0] = 0;
-            sell[1] = Math.max(sell[0], prices[1] + buy[0]);
-            for (int i = 2; i < n; i++) {
-                buy[i] = Math.max(buy[i - 1], sell[i - 2] - prices[i]);
-                sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);
-            }
-    
-            return sell[n - 1];
+        if (prices == null || prices.length <= 1) {
+            return 0;
         }
+        int n = prices.length;
+        int[] buy = new int[n];
+        int[] sell = new int[n];
+        buy[0] = -prices[0];
+        buy[1] = Math.max(-prices[0], -prices[1]);
+        sell[0] = 0;
+        sell[1] = Math.max(sell[0], prices[1] + buy[0]);
+        for (int i = 2; i < n; i++) {
+            buy[i] = Math.max(buy[i - 1], sell[i - 2] - prices[i]);
+            sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i]);
+        }
+
+        return sell[n - 1];
+    }
 }
 ```
 
@@ -131,21 +129,21 @@ class solution {
 ```Java
 class solution {
     private int maxProfit(int[] prices, int fee) {
-            if (prices == null || prices.length <= 1) {
-                return 0;
-            }
-            int n = prices.length;
-            int[] buy = new int[n];
-            int[] sell = new int[n];
-            buy[0] = -prices[0];
-            sell[0] = 0;
-            for (int i = 1; i < n; i++) {
-                buy[i] = Math.max(buy[i - 1], sell[i - 1] - prices[i]);
-                sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i] - fee);
-            }
-            return sell[n - 1];
+        if (prices == null || prices.length <= 1) {
+            return 0;
         }
+        int n = prices.length;
+        int[] buy = new int[n];
+        int[] sell = new int[n];
+        buy[0] = -prices[0];
+        sell[0] = 0;
+        for (int i = 1; i < n; i++) {
+            buy[i] = Math.max(buy[i - 1], sell[i - 1] - prices[i]);
+            sell[i] = Math.max(sell[i - 1], buy[i - 1] + prices[i] - fee);
+        }
+        return sell[n - 1];
+    }
 }
 ```
 
-#### 
+
