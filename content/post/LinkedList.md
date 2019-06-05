@@ -10,22 +10,271 @@ tags:        ["Algorithm"]
 categories:  ["Tech" ]
 ---
 # LinkedList Problem Series
----
+
 ## Table of Contents
 
-#### Reverse Problems
-* [LC206 Reverse Linked List](#ReverseLinkedList)
-* [LC92 Reverse Linked List II](#ReverseLinkedListII)
-
-#### Copy Problems
-* Test
-
+* Reverse Problems
+  * [LC206 Reverse Linked List](#ReverseLinkedList)
+  * [LC92 Reverse Linked List II](#ReverseLinkedListII)
+  * [LC25 Reverse Nodes in k-Group](#ReverseNodesinkGroup)
+* Copy Problems
+  * [LC138 Copy List with Random Pointer](#CopyListwithRandomPointer)
+* Remove/Insert/Reorder Problems
+  * [LC203 Remove Linked List Elements](#RemoveLinkedListElements) 
+  * [LC83 Remove Duplicates from Sorted List](#RemoveDuplicatesfromSortedList)
+  * [LC82 Remove Duplicates from Sorted List II](#RemoveDuplicatesfromSortedListII)
+  * [LC143 Reorder List](#ReorderList)
+* Sorting Problems
+  * [LC147 Insertion Sort List](#InsertionSortList)
+  * [LC148 Sort List](#SortList)
 
 --- 
+* LC 148 *Sort List* <a name="SortList"></a>
+
+
+* LC 147 *Insertion Sort List* <a name="InsertionSortList"></a>
+<br>: Sort the linked list in by insertion sort.
+    ```java
+    class Demo {
+         private ListNode insertionSortList(ListNode head) {
+             if (head == null || head.next == null) {
+                 return head;
+             }
+             ListNode dummyHead = new ListNode(0);
+             dummyHead.next = head;
+             ListNode lHead = dummyHead;
+             ListNode rHead = head.next;
+             head.next = null; // Break here
+             ListNode lCurr;
+             ListNode rCurr;
+             ListNode lNext;
+             while (rHead != null) {
+                 lCurr = lHead;
+                 rCurr = rHead;
+                 rHead = rHead.next;
+                 while (lCurr.next != null && lCurr.next.val < rCurr.val) {
+                     lCurr = lCurr.next;
+                 }
+                 lNext = lCurr.next;
+                 lCurr.next = rCurr;
+                 rCurr.next = lNext;
+                 lHead = dummyHead;
+             }
+             return dummyHead.next;
+         } 
+    }
+    ```
+
+* LC 143 *Reorder List* <a name="ReorderList"></a>
+<br>: 1->2->3->4 to 1->4->2->3 in place.
+<br> Break it into 3 sub-problems.
+<br> Need to break two parts before merge!!! Or the inner cycle can occur.
+    ```java
+    class Demo{
+        /**
+         * 1. Find middle node (slow-fast pointer)
+         * 2. Reverse 2nd part of the list
+         * 3. Merge the two part.
+         *
+         * @param head
+         */
+        private void reorderList(ListNode head) {
+            // Find mid
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast.next != null && fast.next.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            ListNode midNode = slow.next;
+            // Reverse
+            ListNode prev = null;
+            ListNode curr = midNode;
+            ListNode next;
+            while (curr != null) {
+                next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+            slow.next = null; // !! Break two parts
+            midNode = prev;
+            // Merge
+            ListNode pHead = head;
+            ListNode qHead = midNode;
+            ListNode pNext, qNext;
+            while (qHead != null) {
+                pNext = pHead.next;
+                qNext = qHead.next;
+                pHead.next = qHead;
+                qHead.next = pNext;
+                pHead = pNext;
+                qHead = qNext;
+            }
+        }
+    }
+    ```
+
+* LC 203 *Remove Linked List Elements* <a name="RemoveLinkedListElements"></a>
+<br>: Remove nodes with appointed value.
+    ```java
+    class Demo {
+        // Recursively
+        private ListNode removeElements(ListNode head, int val) {
+                if (head == null) return null;
+                head.next = removeElements(head.next, val);
+                return head.val == val ? head.next : head;
+        }
+    
+        // Iteratively
+        private ListNode removeElements_(ListNode head, int val) {
+             ListNode dummyHead = new ListNode(0);
+             dummyHead.next = head;
+             head = dummyHead;
+             while (head != null && head.next != null) {
+                 if (head.next.val == val) {
+                     head.next = head.next.next;
+                 } else {
+                     head = head.next;
+                 }
+             }
+             return dummyHead.next;
+        }
+    }
+    ```
+    
+
+* LC 83 *Remove Duplicates from Sorted List* <a name="RemoveDuplicatesfromSortedList"></a>
+    ```java
+    class Demo {
+        private ListNode deleteDuplicates(ListNode head) {
+             ListNode pHead = head;
+             while (pHead != null && pHead.next != null) {
+                 if (pHead.val == pHead.next.val) {
+                     pHead.next = pHead.next.next;
+                 } else {
+                     pHead = pHead.next;
+                 }
+             }
+             return head;
+        }
+    }
+    ```
+
+* LC 82 *Remove Duplicates from Sorted List II* <a name="RemoveDuplicatesfromSortedListII"></a>
+<br>: Leave only distinct numbers (nodes). 
+    ```java
+    class Demo {
+        private ListNode deleteDuplicates(ListNode head) {
+            ListNode dummyHead = new ListNode(0);
+            dummyHead.next = head;
+            Integer preVal = null;
+            ListNode prev = dummyHead;
+            ListNode curr = head;
+            while (curr != null) {
+                if ((preVal == null || preVal != curr.val) &&
+                        (curr.next == null || curr.val != curr.next.val)) {
+                    preVal = curr.val;
+                    prev = curr;
+                    curr = curr.next;
+                } else {
+                    preVal = curr.val;
+                    prev.next = curr.next;
+                    curr = curr.next;
+                }
+            }
+            return dummyHead.next;
+        }
+    }
+    ```
+
+* LC 25 *Reverse Nodes in k-Group* <a name="ReverseNodesinkGroup"></a>
+<br> Re-initialize the variables needed after the loop.
+    ```java
+    class Demo {
+        private ListNode reverseKGroup(ListNode head, int k) {
+            ListNode pHead = head;
+            int len = 0;
+            while (pHead != null) {
+                pHead = pHead.next;
+                len++;
+            }
+            ListNode dummyHead = new ListNode(0);
+            dummyHead.next = head;
+    
+            ListNode prev = null;
+            ListNode curr = head;
+            ListNode next = null;
+            ListNode preHead = dummyHead;
+            ListNode sectionEndNode;
+            int l;
+            while (len >= k) {
+                l = k;
+                sectionEndNode = curr;
+                while (l > 0) {
+                    next = curr.next;
+                    curr.next = prev;
+                    prev = curr;
+                    curr = next;
+                    l--;
+                }
+                preHead.next = prev;
+                sectionEndNode.next = curr;
+                // post re-initialization
+                preHead = sectionEndNode; // prev of head of next section
+                prev = null;
+                curr = next;
+                next = null;
+                len -= k;
+            }
+            return dummyHead.next;
+        }    
+    }
+    ```
+
 
 * LC 92 *Reverse Linked List II* <a name="ReverseLinkedListII"></a>
+<br>: Reverse Linkedlist in a section.
+<br> Keep track of the breaking points, connect them after reversion.
+    ```java
+    class Demo {
+        private ListNode reverseBetween(ListNode head, int m, int n) {
+            if (m == n) {
+                return head;
+            }
+            ListNode dummyHead = new ListNode(0);
+            dummyHead.next = head;
+            ListNode pHead = dummyHead;
+            n -= m;
+            while (m != 1 && pHead != null) {
+                pHead = pHead.next;
+                m--;
+            }
+            ListNode reverseEndNode = pHead.next;
+            // reverseEndNode: the last node of the reversed part
+            ListNode prev = null;
+            ListNode curr = pHead.next;
+            ListNode next;
+            while (n >= 0) {
+                next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+                n--;
+            }
+            // now prev is reversed new head
+            // curr is the head of the third part
+            pHead.next = prev;
+            reverseEndNode.next = curr;
+    
+            return dummyHead.next;
+        }
+    
+    }
+    ```
 
-* LC 138 *Copy List with Random Pointer*
+
+* LC 138 *Copy List with Random Pointer* <a name="CopyListwithRandomPointer"></a>
   * O(N) Space Solution: 
   <br> Use Map<oldNode, newNode> to save the relationship
   between two lists. Two rounds, first for connect next pointers,
