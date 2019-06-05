@@ -17,7 +17,6 @@ categories:  ["Tech" ]
 * LC 236 *LCA (Lowest Common Ancestor)*
 <br> Two solutions
   * Recursive test
-    <br>
     ```java
     class Demo {
         private TreeNode lowestCommonAncestor__(TreeNode root, TreeNode p, TreeNode q) {
@@ -76,7 +75,7 @@ categories:  ["Tech" ]
     
 * LC 235 *LCA of BST*
 <br> Much easier, use the property of BST to judge p, q
-, root \'s relative location.
+, root's relative location.
   - Recursive
     ```java
     class Demo {

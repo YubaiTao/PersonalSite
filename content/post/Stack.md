@@ -16,22 +16,22 @@ categories:  ["Tech" ]
 * LC 1019 *Next Greater Node in LinkedList*
 <br> For next bigger problem, maintain a monotonic decreasing 
 stack. 
-```java
-public class demo {
-    public int[] nextBigger(int[] A) {
-        int n = A.length;
-        int[] ret = new int[n];
-        Deque<Integer> stack = new ArrayDeque<>();
-        for (int i = 0; i < n; i++) {
-            while (!stack.isEmpty() && A[stack.peek()] < A[i]) {
-                ret[stack.pop()] = A[i];
+    ```java
+    public class demo {
+        public int[] nextBigger(int[] A) {
+            int n = A.length;
+            int[] ret = new int[n];
+            Deque<Integer> stack = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stack.isEmpty() && A[stack.peek()] < A[i]) {
+                    ret[stack.pop()] = A[i];
+                }
+                stack.push(i);
             }
-            stack.push(i);
-        }
-        return ret;            
-    }    
-}
-```
+            return ret;            
+        }    
+    }
+    ```
 
 * LC 20 *Valid Parentheses*
 <br>: `"()[]{}"`, `{[]}` valid. `"([)]"` invalid.

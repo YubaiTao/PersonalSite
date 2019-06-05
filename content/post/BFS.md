@@ -37,32 +37,32 @@ parent of the next two elements in the loop. <br>
 Push back these two nodes to the queue, they would be used as parent 
 of other nodes.
 <br> It's like a reverse thought of BFS with queue.
-```Java
-class demo {
-    public TreeNode deserialize(String data) {
-                if (data.equals("")) {
-                    return null;
-                }
-                String[] nodeVals = data.split(",");
-                int n = nodeVals.length;
-                Queue<TreeNode> queue = new LinkedList<>();
-                TreeNode root = new TreeNode(Integer.valueOf(nodeVals[0]));
-                queue.add(root);
-                for (int i = 1; i < n; i++) {
-                    TreeNode parent = queue.poll();
-                    if (!nodeVals[i].equals("null")) {
-                        TreeNode left = new TreeNode(Integer.parseInt(nodeVals[i]));
-                        parent.left = left;
-                        queue.add(left);
-                    }
-                    i++;
-                    if (!nodeVals[i].equals("null")) {
-                        TreeNode right = new TreeNode(Integer.parseInt(nodeVals[i]));
-                        parent.right = right;
-                        queue.add(right);
-                    }
-                }
-                return root;
+    ```Java
+    class Demo {
+        public TreeNode deserialize(String data) {
+            if (data.equals("")) {
+                return null;
             }
-}
-```
+            String[] nodeVals = data.split(",");
+            int n = nodeVals.length;
+            Queue<TreeNode> queue = new LinkedList<>();
+            TreeNode root = new TreeNode(Integer.valueOf(nodeVals[0]));
+            queue.add(root);
+            for (int i = 1; i < n; i++) {
+                TreeNode parent = queue.poll();
+                if (!nodeVals[i].equals("null")) {
+                    TreeNode left = new TreeNode(Integer.parseInt(nodeVals[i]));
+                    parent.left = left;
+                    queue.add(left);
+                }
+                i++;
+                if (!nodeVals[i].equals("null")) {
+                    TreeNode right = new TreeNode(Integer.parseInt(nodeVals[i]));
+                    parent.right = right;
+                    queue.add(right);
+                }
+            }
+            return root;
+        }
+    }
+    ```
