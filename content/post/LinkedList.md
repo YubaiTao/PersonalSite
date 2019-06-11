@@ -20,6 +20,7 @@ categories:  ["Tech" ]
 * Copy Problems
   * [LC138 Copy List with Random Pointer](#CopyListwithRandomPointer)
 * Remove/Insert/Reorder Problems
+  * [LC237 Delete Node in a Linked List](#DeleteNodeinaLinkedList)
   * [LC203 Remove Linked List Elements](#RemoveLinkedListElements) 
   * [LC83 Remove Duplicates from Sorted List](#RemoveDuplicatesfromSortedList)
   * [LC82 Remove Duplicates from Sorted List II](#RemoveDuplicatesfromSortedListII)
@@ -27,8 +28,24 @@ categories:  ["Tech" ]
 * Sorting Problems
   * [LC147 Insertion Sort List](#InsertionSortList)
   * [LC148 Sort List](#SortList)
-
---- 
+  
+---
+* LC 206 *Delete Node in a Linked List* <a name="DeleteNodeinaLinkedList"/>
+<br>: Delete the node(except the tail) in a singly linked list, 
+given only access to that node.
+<br> Technically you can not delete a node without knowing the
+previous node. 
+In this question, we just rewrite the node value to the next node.
+And delete the next node.
+    ```java
+    class Demo {
+        private void deleteNode(ListNode node) {
+            node.val = node.next.val;
+            node.next = node.next.next;
+        }
+    }
+    ```  
+ 
 * LC 148 *Sort List* <a name="SortList"></a>
 <br>: Sort the linked list in O(nlogn) time and constant space.
 <br>Consider using merge sort, but not in recursion fashion. 
