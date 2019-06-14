@@ -2,7 +2,7 @@
 title:       "LinkedList Problem Series"
 subtitle:    ""
 description: "Collection of LinkedList Problems"
-date:        2019-06-11
+date:        2019-06-14
 author:      Yubai Tao
 image:       "img/linkedlist.png"
 showtoc:     false
@@ -25,12 +25,109 @@ categories:  ["Tech" ]
   * [LC83 Remove Duplicates from Sorted List](#RemoveDuplicatesfromSortedList)
   * [LC82 Remove Duplicates from Sorted List II](#RemoveDuplicatesfromSortedListII)
   * [LC143 Reorder List](#ReorderList)
+  * [LC328 Odd Even Linked List](#OddEvenLinkedList)
 * Sorting Problems
   * [LC147 Insertion Sort List](#InsertionSortList)
   * [LC148 Sort List](#SortList)
+* Miscellaneous
+  * [LC369 Plus One Linked List](#369)
+  
   
 ---
-* LC 206 *Delete Node in a Linked List* <a name="DeleteNodeinaLinkedList"/>
+
+* LC 369 *Plus One Linked List* <a name="369"></a>
+<br>: Given a non-negative integer represented as non-empty 
+a singly linked list of digits, plus one to the integer.
+The digits are stored such that the most significant digit is 
+at the head of the list.
+<br> We can naively use the carry bit to do this brute-force.
+<br> Also can be done in two-pointer way. 
+Key thought is to locate the right-most non-nine digit node.
+(Which indicates the rest digits/nodes value are all 9).
+    ```java
+    class Demo {
+        private ListNode plusOne_(ListNode head) {
+            ListNode dummyHead = new ListNode(0);
+            dummyHead.next = head;
+            ListNode nonNineNode = dummyHead;
+            ListNode pHead = head;
+            while (pHead != null) {
+                if (pHead.val != 9) {
+                    nonNineNode = pHead;
+                }
+                pHead = pHead.next;
+            }
+            nonNineNode.val++;
+            pHead = nonNineNode.next;
+            while (pHead != null) {
+                pHead.val = 0;
+                pHead = pHead.next;
+            }
+            return dummyHead.val == 1 ? dummyHead : dummyHead.next;
+        }
+        
+        private ListNode plusOne(ListNode head) {
+            Deque<ListNode> stack = new LinkedList<>();
+            ListNode oldHead = head;
+            while (head != null) {
+                stack.push(head);
+                head = head.next;
+            }
+            int carry = 1;
+            ListNode curr;
+            while (!stack.isEmpty()) {
+                curr = stack.poll();
+                if (curr.val + carry == 10) {
+                    carry = 1;
+                    curr.val = 0;
+                } else {
+                    curr.val = curr.val + carry;
+                    carry = 0;
+                }
+            }
+            if (carry == 1) {
+                ListNode newHead = new ListNode(1);
+                newHead.next = oldHead;
+                return newHead;
+            }
+            return oldHead;
+        }
+    }
+    ``` 
+
+
+* LC 328 *Odd Even Linked List* <a name="OddEvenLinkedList"></a>
+<br>: Group all odd nodes together followed by the even nodes. (odd/even is for sequence, not node value).
+<br> Straight-forward break the node, collect odd/event part, and connect two parts.
+    ````java
+    class Demo {
+        private ListNode oddEvenList(ListNode head) {
+            ListNode oddDummyHead = new ListNode(-1);
+            ListNode evenDummyHead = new ListNode(0);
+            ListNode oddHead = oddDummyHead;
+            ListNode evenHead = evenDummyHead;
+            boolean oddFlag = true;
+            while (head != null) {
+                if (oddFlag) {
+                    oddHead.next = head;
+                    head = head.next;
+                    oddHead = oddHead.next;
+                    oddHead.next = null;
+                } else {
+                    evenHead.next = head;
+                    head = head.next;
+                    evenHead = evenHead.next;
+                    evenHead.next = null;
+                }
+                oddFlag = !oddFlag;
+            }
+            oddHead.next = evenDummyHead.next;
+            return oddDummyHead.next;
+        }
+    }
+    ````
+
+* LC 206 *Delete Node in a Linked List* <a name="DeleteNodeinaLinkedList"></a>
 <br>: Delete the node(except the tail) in a singly linked list, 
 given only access to that node.
 <br> Technically you can not delete a node without knowing the
