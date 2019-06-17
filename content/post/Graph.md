@@ -35,18 +35,17 @@ categories:  ["Tech" ]
       else
           return L (a topologically sorted order)
       ```
-  
-  The more straight-forward explanation is that: 
-  First find all nodes that in-degree is zero.
-  Remove these nodes and update the in-degree of rest nodes.
-  Then do this to the new nodes that have zero in-degree.
-  Use a list structure to hold the 0-indegree nodes, 
-  prefer a `Queue`.
-  <br> After the whole process, 
-  if there are still nodes with in-degree. 
-  Then cycle presents.
-  <br> If not, the removed nodes formed the topological sort result.
-  This result is not unique. 
+      The more straight-forward explanation is that: 
+      First find all nodes that in-degree is zero.
+      Remove these nodes and update the in-degree of rest nodes.
+      Then do this to the new nodes that have zero in-degree.
+      Use a list structure to hold the 0-indegree nodes, 
+      prefer a `Queue`.
+      <br> After the whole process, 
+      if there are still nodes with in-degree. 
+      Then cycle presents.
+      <br> If not, the removed nodes formed the topological sort result.
+      This result is not unique. 
   * DFS approach
       ```
       L ← Empty list that will contain the sorted node
@@ -63,10 +62,10 @@ categories:  ["Tech" ]
           mark n with a permanent mark
           add n to head of L
       ```
-  <br> This approach use the idea that the topological sequence 
-  is the reverse order result of finishing time running DFS.
-  So we may use a stack to save the nodes that we are 
-  'finished', or 'done visiting'. 
+      This approach use the idea that the topological sequence 
+      is the reverse order result of finishing time running DFS.
+      So we may use a stack to save the nodes that we are 
+      'finished', or 'done visiting'. 
 
 ---
 * LC207M *Course Schedule* <a name="207"></a>
