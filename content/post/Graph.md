@@ -20,21 +20,22 @@ categories:  ["Tech" ]
 ---
 * Topological Sort[^1]
   * BFS approach (Kahn's Algorithm)
-  ``` 
-  L ← Empty list that will contain the sorted element <br>
-  S ← Set of all nodes with no incoming edge
-  while S is non-empty do
-      remove a node n from S
-      add n to tail of L
-      for each node m with an edge e from n to m do
-          remove edge e from the graph
-          if m has no other incoming edges then
-              insert m into S
-  if graph has edges then
-      return error (graph has at least one cycle)
-  else
-      return L (a topologically sorted order)
-  ```
+      ```
+      L ← Empty list that will contain the sorted element <br>
+      S ← Set of all nodes with no incoming edge
+      while S is non-empty do
+          remove a node n from S
+          add n to tail of L
+          for each node m with an edge e from n to m do
+              remove edge e from the graph
+              if m has no other incoming edges then
+                  insert m into S
+      if graph has edges then
+          return error (graph has at least one cycle)
+      else
+          return L (a topologically sorted order)
+      ```
+  
   The more straight-forward explanation is that: 
   First find all nodes that in-degree is zero.
   Remove these nodes and update the in-degree of rest nodes.
@@ -47,21 +48,21 @@ categories:  ["Tech" ]
   <br> If not, the removed nodes formed the topological sort result.
   This result is not unique. 
   * DFS approach
-  ```
-  L ← Empty list that will contain the sorted node
-  while exists nodes without a permanent mark do
-      select an unmarked node n
-      visit(n)
-      
-  function visit(node n)
-      if n has a permanent mark then return
-      if n has a temporary mark then stop (not a DAG/acyclic)
-      for each node m with an edge from n to m do
-          visit(m)
-      remove temporary mark from n
-      mark n with a permanent mark
-      add n to head of L
-  ```
+      ```
+      L ← Empty list that will contain the sorted node
+      while exists nodes without a permanent mark do
+          select an unmarked node n
+          visit(n)
+          
+      function visit(node n)
+          if n has a permanent mark then return
+          if n has a temporary mark then stop (not a DAG/acyclic)
+          for each node m with an edge from n to m do
+              visit(m)
+          remove temporary mark from n
+          mark n with a permanent mark
+          add n to head of L
+      ```
   <br> This approach use the idea that the topological sequence 
   is the reverse order result of finishing time running DFS.
   So we may use a stack to save the nodes that we are 
