@@ -11,9 +11,67 @@ categories:  ["Tech" ]
 ---
 # Dynamic Programming
 
-#### Sell Stock Problem Series
+## Table of Contents <a name="toc"></a>
+* Bottom-up 2D (Compressed 1D)
+  * [LC174 Dungeon Game](#174)
+* Sell Stock Series
+  * [LC121 Best Time to Buy and Sell Stock I](#121)
+  * [LC121 Best Time to Buy and Sell Stock II](#122)
+  * [LC121 Best Time to Buy and Sell Stock III](#123)
+  * [LC121 Best Time to Buy and Sell Stock IV](#188)
+  
+  
+---
+* LC 174 *Dungeon Game (H)* <a name="174"></a>
+<br> :: Write a function to determine the knight's minimum initial health 
+so that he is able to rescue the princess. 
+Knight can only move down or right and his HP can never below 1.
+<br> The goal is to find the minimum valid initial HP.
+DFS style brute-force would cause TLE. 
+Use a bottom-up approach to build the DP table.
+<br> Derive formula: 
+<br> `dp[i][j] = max(min(dp[i][j + 1], dp[i + 1][j]) - dungeon[i][j], 0)`
+<br> [Back to TOC](#toc)  
+    ```java
+    class Demo {
+        /**
+        * Example:
+        *   -2(K)  -3   3
+        *   -5     -10  1
+        *   10     30   -5(P)
+        *   
+        * The optimal path is right->right->down->down.
+        * The initial health of the knight must be at least 7
+        * 
+        * @param dungeon
+        * @return 
+        */
+        private int calculateMinimumHP(int[][] dungeon) {
+            int m = dungeon.length;
+            int n = dungeon[0].length;
+            int[] dp = new int[n];
+            dp[n - 1] = dungeon[m - 1][n - 1] > 0 ? 0 : 0 - dungeon[m - 1][n - 1];
+            for (int i = n - 2; i >= 0; i--) {
+                dp[i] = Math.max(dp[i + 1] -dungeon[m - 1][i], 0);
+            }
+            for (int i = m - 2; i >= 0; i--) {
+                dp[n - 1] = Math.max(dp[n - 1] - dungeon[i][n - 1], 0);
+                for (int j = n - 2; j >=0; j--) {
+                    dp[j] = Math.max(Math.min(dp[j + 1], dp[j]) - dungeon[i][j], 0);
+                }
+            }
+    
+            return dp[0] + 1;
+        }
+    }
+    ```
 
-* Best Time to Buy and Sell Stock I (LC#121, Easy)
+
+
+
+#### Sell Stock Problem Series
+[Back to TOC](#toc)
+* Best Time to Buy and Sell Stock I (LC#121, Easy) <a name="121"></a>
 <br>
     ```Java
     class Solution {
@@ -33,11 +91,11 @@ categories:  ["Tech" ]
     }
     ```
 
-* Best Time to Buy and Sell Stock II (LC#122, Easy)
+* Best Time to Buy and Sell Stock II (LC#122, Easy)<a name="122"></a>
 <br>
 Actually an greedy approach. Just add all earning range.
 
-* Best Time to Buy and Sell Stock III (LC#123, Hard)
+* Best Time to Buy and Sell Stock III (LC#123, Hard) <a name="123"></a>
 <br>
     ```Java
     class Solution {
@@ -60,7 +118,7 @@ Actually an greedy approach. Just add all earning range.
     }
     ```
 
-* Best Time to Buy and Sell Stock IV (LC#188, hard)
+* Best Time to Buy and Sell Stock IV (LC#188, hard) <a name="188"></a>
     ```Java
     class Solution {
         /**
