@@ -21,8 +21,8 @@ categories:  ["Tech" ]
 * Topological Sort[^1]
   * BFS approach (Kahn's Algorithm)
       ```
-      L ← Empty list that will contain the sorted element <br>
-      S ← Set of all nodes with no incoming edge
+      L: Empty list that will contain the sorted element
+      S: Set of all nodes with no incoming edge
       while S is non-empty do
           remove a node n from S
           add n to tail of L
@@ -48,7 +48,7 @@ categories:  ["Tech" ]
       This result is not unique. 
   * DFS approach
       ```
-      L ← Empty list that will contain the sorted node
+      L: Empty list that will contain the sorted node
       while exists nodes without a permanent mark do
           select an unmarked node n
           visit(n)
