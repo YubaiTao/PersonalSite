@@ -21,7 +21,7 @@ categories:  ["Tech" ]
 ---
 * Topological Sort[^1]
   * BFS approach (Kahn's Algorithm)
-      ```C
+      ```{java, eval=FALSE}
       L: Empty list that will contain the sorted element
       S: Set of all nodes with no incoming edge
       while S is non-empty do
