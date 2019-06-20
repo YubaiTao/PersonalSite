@@ -2,7 +2,7 @@
 title:       "Graph Problem Series"
 subtitle:    ""
 description: "Collection of Graph Problems"
-date:        2019-06-17
+date:        2019-06-19
 author:      Yubai Tao
 image:       "img/graph.jpg"
 showtoc:     false
@@ -17,56 +17,55 @@ categories:  ["Tech" ]
   * [LC210 Course Schedule II](#210)
   * [LC269 Alien Dictionary](#269)
 
-
 ---
-* Topological Sort[^1]
-  * BFS approach (Kahn's Algorithm)
-      ```{java, eval=FALSE}
-      L: Empty list that will contain the sorted element
-      S: Set of all nodes with no incoming edge
-      while S is non-empty do
-          remove a node n from S
-          add n to tail of L
-          for each node m with an edge e from n to m do
-              remove edge e from the graph
-              if m has no other incoming edges then
-                  insert m into S
-      if graph has edges then
-          return error (graph has at least one cycle)
-      else
-          return L (a topologically sorted order)
-      ```
-      The more straight-forward explanation is that: 
-      First find all nodes that in-degree is zero.
-      Remove these nodes and update the in-degree of rest nodes.
-      Then do this to the new nodes that have zero in-degree.
-      Use a list structure to hold the 0-indegree nodes, 
-      prefer a `Queue`.
-      <br> After the whole process, 
-      if there are still nodes with in-degree. 
-      Then cycle presents.
-      <br> If not, the removed nodes formed the topological sort result.
-      This result is not unique. 
-  * DFS approach
-      ```
-      L: Empty list that will contain the sorted node
-      while exists nodes without a permanent mark do
-          select an unmarked node n
-          visit(n)
-          
-      function visit(node n)
-          if n has a permanent mark then return
-          if n has a temporary mark then stop (not a DAG/acyclic)
-          for each node m with an edge from n to m do
-              visit(m)
-          remove temporary mark from n
-          mark n with a permanent mark
-          add n to head of L
-      ```
-      This approach use the idea that the topological sequence 
-      is the reverse order result of finishing time running DFS.
-      So we may use a stack to save the nodes that we are 
-      'finished', or 'done visiting'. 
+##### Topological Sort[^1] <a name="TopologicalSort"></a>
+* BFS approach (Kahn's Algorithm)
+  ```{java, eval=FALSE}
+  L: Empty list that will contain the sorted element
+  S: Set of all nodes with no incoming edge
+  while S is non-empty do
+      remove a node n from S
+      add n to tail of L
+      for each node m with an edge e from n to m do
+          remove edge e from the graph
+          if m has no other incoming edges then
+              insert m into S
+  if graph has edges then
+      return error (graph has at least one cycle)
+  else
+      return L (a topologically sorted order)
+  ```
+  The more straight-forward explanation is that: 
+  First find all nodes that in-degree is zero.
+  Remove these nodes and update the in-degree of rest nodes.
+  Then do this to the new nodes that have zero in-degree.
+  Use a list structure to hold the 0-indegree nodes, 
+  prefer a `Queue`.
+  <br> After the whole process, 
+  if there are still nodes with in-degree. 
+  Then cycle presents.
+  <br> If not, the removed nodes formed the topological sort result.
+  This result is not unique. 
+* DFS approach
+  ```
+  L: Empty list that will contain the sorted node
+  while exists nodes without a permanent mark do
+      select an unmarked node n
+      visit(n)
+      
+  function visit(node n)
+      if n has a permanent mark then return
+      if n has a temporary mark then stop (not a DAG/acyclic)
+      for each node m with an edge from n to m do
+          visit(m)
+      remove temporary mark from n
+      mark n with a permanent mark
+      add n to head of L
+  ```
+  This approach use the idea that the topological sequence 
+  is the reverse order result of finishing time running DFS.
+  So we may use a stack to save the nodes that we are 
+  'finished', or 'done visiting'. 
 
 ---
 
