@@ -13,14 +13,15 @@ categories:  ["Tech" ]
 
 ## Table of Contents <a name="toc"></a>
 * [Topological Sort](#TopologicalSort)
-  * [LC207 CourseSchedule](#207)
-  * [LC210 CourseScheduleII](#210)
+  * [LC207 Course Schedule](#207)
+  * [LC210 Course Schedule II](#210)
+  * [LC269 Alien Dictionary](#269)
 
 
 ---
 * Topological Sort[^1]
   * BFS approach (Kahn's Algorithm)
-      ```
+      ```C
       L: Empty list that will contain the sorted element
       S: Set of all nodes with no incoming edge
       while S is non-empty do
@@ -68,6 +69,108 @@ categories:  ["Tech" ]
       'finished', or 'done visiting'. 
 
 ---
+
+* LC269H *Alien Dictionary* <a name="269"></a>
+<br> :: There is a new alien language 
+which uses the latin alphabet. However, 
+the order among letters are unknown to you. 
+You receive a list of non-empty words from the dictionary, 
+where words are sorted lexicographically 
+by the rules of this new language. 
+Derive the order of letters in this language.
+<br> Example input:
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "wrt",
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "wrf",
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "er",
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "ett",
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "rftt"
+<br> Output : "wertf"
+<br> In the example: 
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "wrt" \> "wrf" -- (t -\> f), 
+<br> &nbsp;&nbsp;&nbsp;&nbsp; "wrf" \> "er" -- (w -\> e) ...
+<br> The pattern is that the first different character 
+between two consecutive words can give us one induction rule.
+Collect all these induction rules, 
+then use the topological to find the order.
+<br> This is pretty much like [Course Schedule II](#210),
+one slight modification is that we do not have the fixed alphabet.
+We have to keep a alphabet (`Set`), and after using all the induction rules,
+we add the characters that appears in the alphabet but
+do not participate the induction 
+(solely starts in topological sort).
+    ```java
+    class Demo {
+        // Using Kahn's algorithm
+        private String alienOrder(String[] words) {
+            int n = words.length;
+            Map<Character, Integer> indegreeMap = new HashMap<>();
+            Set<char[]> orderSet = new HashSet<>();
+            Set<Character> alphabet = new HashSet<>();
+            for (int i = 0; i < n - 1; i++) {
+                int minLen = Math.min(words[i].length(), words[i + 1].length());
+                int m = words[i].length();
+                for (int j = 0; j < m; j++) {
+                    alphabet.add(words[i].charAt(j));
+                }
+                for (int j = 0; j < minLen; j++) {
+                    if (words[i].charAt(j) != words[i + 1].charAt(j)) {
+                        char hi = words[i].charAt(j);
+                        char lo = words[i + 1].charAt(j);
+                        if (!orderSet.contains(new char[]{hi, lo})) {
+                            if (!indegreeMap.containsKey(hi)) {
+                                indegreeMap.put(hi, 0);
+                            }
+                            indegreeMap.put(lo, indegreeMap.getOrDefault(lo, 0) + 1);
+                            orderSet.add(new char[]{hi, lo});
+                        }
+                        break;
+                    }
+                }
+            }
+            for (int j = 0; j < words[n - 1].length(); j++) {
+                alphabet.add(words[n - 1].charAt(j));
+            }
+            Queue<Character> queue = new LinkedList<>();
+            StringBuilder sb = new StringBuilder();
+            Set<Character> usedSet = new HashSet<>();
+            for (Map.Entry<Character, Integer> entry : indegreeMap.entrySet()) {
+                if (entry.getValue() == 0) {
+                    queue.offer(entry.getKey());
+                }
+            }
+            while (!queue.isEmpty()) {
+                char currChar = queue.poll();
+                sb.append(currChar);
+                usedSet.add(currChar);
+                for (char[] pair : orderSet) {
+                    if (pair[0] == currChar) {
+                        indegreeMap.put(pair[1], indegreeMap.get(pair[1]) - 1);
+                        if (indegreeMap.get(pair[1]) == 0) {
+                            queue.offer(pair[1]);
+                        }
+                    }
+                }
+            }
+            for (int i :indegreeMap.values()){
+                if (i != 0) {
+                    return "";
+                }
+            }
+            for (char c : alphabet) {
+                if (!usedSet.contains(c)) {
+                    sb.append(c);
+                }
+            }
+            return sb.toString();
+        }
+    }
+    ```
+[Back to TOC](#toc)    
+ 
+
+  
+
+
 * LC207M *Course Schedule* <a name="207"></a>
 <br> :: pair(course, prereq) in prerequisites[][].
 Judge if this schedule is valid.
