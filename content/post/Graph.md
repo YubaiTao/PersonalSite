@@ -20,7 +20,7 @@ categories:  ["Tech" ]
 ---
 ##### Topological Sort[^1] <a name="TopologicalSort"></a>
 * BFS approach (Kahn's Algorithm)
-  ```{java, eval=FALSE}
+  ```
   L: Empty list that will contain the sorted element
   S: Set of all nodes with no incoming edge
   while S is non-empty do
@@ -46,13 +46,13 @@ categories:  ["Tech" ]
   Then cycle presents.
   <br> If not, the removed nodes formed the topological sort result.
   This result is not unique. 
+  
 * DFS approach
   ```
   L: Empty list that will contain the sorted node
   while exists nodes without a permanent mark do
       select an unmarked node n
       visit(n)
-      
   function visit(node n)
       if n has a permanent mark then return
       if n has a temporary mark then stop (not a DAG/acyclic)
